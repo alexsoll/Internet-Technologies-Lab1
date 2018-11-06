@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+	<style>
+	
+	body{
+		background-image: url(table_card.jpg);
+		max-width: 100%;
+		height: auto;
+	
+	}
+	.scene {
+	  width: 200px;
+	  height: 260px;
+	  border: 1px solid #CCC;
+	  margin: 40px 0;
+	  perspective: 600px;
+	}
+
+	.card {
+	  width: 100%;
+	  height: 100%;
+	  transition: all 2s ease-in-out,transform 1s;
+	  transform-style: preserve-3d;
+	  cursor: pointer;
+	  position: relative;
+	}
+
+	.card.is-flipped {
+	  transform: rotateY(180deg);
+	}
+	
+	.card__face {
+	  position: absolute;
+	  width: 100%;
+	  height: 100%;
+	  line-height: 260px;
+	  color: white;
+	  text-align: center;
+	  font-weight: bold;
+	  font-size: 40px;
+	  backface-visibility: hidden;
+	}
+
+	.card__face--front {
+	  background: red;
+	}
+
+	.card__face--back {
+	  background: blue;
+	  transform: rotateY(180deg);
+	}
+	
+	.move-right {
+	  transform: translate(350px, 0);
+	  -webkit-transform: translate(350px, 0);
+	  -o-transform: translate(350px, 0);
+	  -moz-transform: translate(350px, 0);
+	}
+	</style>
+	
+	<script>
+	function func() {
+	var card = document.querySelector('.card');
+	card.addEventListener( 'click', function() {
+	card.classList.toggle('is-flipped');
+	}); }
+	</script>
+<body>
+<div class="scene scene--card" >
+  <div class="card"> 
+    <div class="card__face card__face--front" onclick = "func()">front</div>
+    <div class="card__face card__face--back" onclick = "func()">back</div>
+  </div>
+</div>
+</body>
+</html>
