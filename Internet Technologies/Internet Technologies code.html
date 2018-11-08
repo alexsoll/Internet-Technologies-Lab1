@@ -4,6 +4,24 @@
 </head>
 	<style>
 	
+	@keyframes go-left-right {   /* назовём анимацию: "go-left-right" */
+    from {
+      transform:translate(0px,0px)
+    }
+    to {
+      transform:translate(350px,0px)
+    }
+	}
+
+	@-webkit-keyframes go-left-right {
+    from {
+      transform:translate(0px,0px)
+    }
+    to {
+      transform:translate(350px,0px)
+    }
+	}
+	
 	body{
 		background-image: url(table_card.jpg);
 		max-width: 100%;
@@ -28,7 +46,7 @@
 	}
 
 	.card.is-flipped {
-	  transform: rotateY(180deg);
+	  transform:rotateY(180deg);
 	}
 	
 	.card__face {
@@ -49,7 +67,7 @@
 
 	.card__face--back {
 	  background: blue;
-	  transform: rotateY(180deg);
+	  transform:rotateY(180deg);
 	}
 	
 	.move-right {
@@ -58,20 +76,37 @@
 	  -o-transform: translate(350px, 0);
 	  -moz-transform: translate(350px, 0);
 	}
+	
+	.progress {
+    animation: go-left-right 3s alternate;
+    -webkit-animation: go-left-right 3s alternate;
+	animation-fill-mode: forwards;
+    position: relative;
+  }
 	</style>
 	
 	<script>
-	function func() {
+	function func1() {
 	var card = document.querySelector('.card');
 	card.addEventListener( 'click', function() {
 	card.classList.toggle('is-flipped');
+	//card.classList.toggle('progress')
+	}); }
+	
+	 
+	function func2() {
+	var card = document.querySelector('.card');
+	card.addEventListener( 'click', function() {
+	card.classList.toggle('progress')
 	}); }
 	</script>
 <body>
 <div class="scene scene--card" >
-  <div class="card"> 
-    <div class="card__face card__face--front" onclick = "func()">front</div>
-    <div class="card__face card__face--back" onclick = "func()">back</div>
+  <div  "crd" class="card">
+  <div onclick = "func2()">
+    <div  class="card__face card__face--front" onclick = "finc1()">front</div>
+    <div class="card__face card__face--back" >back</div>
+	</div>
   </div>
 </div>
 </body>
