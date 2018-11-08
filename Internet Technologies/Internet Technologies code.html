@@ -3,24 +3,83 @@
 <head>
 </head>
 	<style>
-	
-	@keyframes go-left-right {   /* назовём анимацию: "go-left-right" */
-    from {
-      transform:translate(0px,0px)
-    }
-    to {
-      transform:translate(350px,0px)
-    }
-	}
+        @keyframes flip-n-slide-1 {
+            from {
+                margin-left: 0px;
+                transform: rotateY(0deg);
+                }
+            to {
+                margin-left: 150px;
+                transform: rotateY(90deg);
+                }
+            }
+        @-webkit-keyframes flip-n-slide-1 {
+                from {
+                    margin-left: 0px;
+                    transform: rotateY(0deg);
+                }
+                to {
+                    margin-left: 150px;
+                    transform: rotateY(90deg);
+                }
+            }
+			.flipping-1 {
 
-	@-webkit-keyframes go-left-right {
-    from {
-      transform:translate(0px,0px)
-    }
-    to {
-      transform:translate(350px,0px)
-    }
-	}
+                animation: flip-n-slide-1 0.5s ease;
+            }
+            .flipping-2 {
+                animation: flip-n-slide-2 0.5s ease forwards;
+            }
+			@keyframes flip-n-slide-2 {
+                from {
+                    margin-left: 150px;
+                    transform: rotateY(90deg);
+                }
+                to {
+                    margin-left: 300px;
+                    transform: rotateY(180deg);
+                }
+			}
+			
+			
+			@keyframes flip-n-slide-3 {
+            from {
+				
+                margin-left: 300px;
+                transform: rotateY(180deg);
+                }
+            to {
+                margin-left: 150px;
+                transform: rotateY(90deg);
+                }
+            }
+        @-webkit-keyframes flip-n-slide-3 {
+                from {
+                    margin-left: 300px;
+                    transform: rotateY(180deg);
+                }
+                to {
+                    margin-left: 150px;
+                    transform: rotateY(90deg);
+                }
+            }
+			.flipping-3 {
+
+                animation: flip-n-slide-3 0.5s ease;
+            }
+            .flipping-4 {
+                animation: flip-n-slide-4 0.5s ease forwards;
+            }
+			@keyframes flip-n-slide-4 {
+                from {
+                    margin-left: 150px;
+                    transform: rotateY(90deg);
+                }
+                to {
+                    margin-left: 0px;
+                    transform: rotateY(0deg);
+                }
+			}
 	
 	body{
 		background-image: url(table_card.jpg);
@@ -31,7 +90,6 @@
 	.scene {
 	  width: 200px;
 	  height: 260px;
-	  border: 1px solid #CCC;
 	  margin: 40px 0;
 	  perspective: 600px;
 	}
@@ -39,26 +97,9 @@
 	.card {
 	  width: 100%;
 	  height: 100%;
-	  transition: all 2s ease-in-out,transform 1s;
-	  transform-style: preserve-3d;
+		
 	  cursor: pointer;
 	  position: relative;
-	}
-
-	.card.is-flipped {
-	  transform:rotateY(180deg);
-	}
-	
-	.card__face {
-	  position: absolute;
-	  width: 100%;
-	  height: 100%;
-	  line-height: 260px;
-	  color: white;
-	  text-align: center;
-	  font-weight: bold;
-	  font-size: 40px;
-	  backface-visibility: hidden;
 	}
 
 	.card__face--front {
@@ -67,47 +108,55 @@
 
 	.card__face--back {
 	  background: blue;
-	  transform:rotateY(180deg);
 	}
-	
-	.move-right {
-	  transform: translate(350px, 0);
-	  -webkit-transform: translate(350px, 0);
-	  -o-transform: translate(350px, 0);
-	  -moz-transform: translate(350px, 0);
-	}
-	
-	.progress {
-    animation: go-left-right 3s alternate;
-    -webkit-animation: go-left-right 3s alternate;
-	animation-fill-mode: forwards;
-    position: relative;
-  }
 	</style>
 	
 	<script>
+	var flag = 0;
 	function func1() {
-	var card = document.querySelector('.card');
-	card.addEventListener( 'click', function() {
-	card.classList.toggle('is-flipped');
-	//card.classList.toggle('progress')
-	}); }
-	
-	 
-	function func2() {
-	var card = document.querySelector('.card');
-	card.addEventListener( 'click', function() {
-	card.classList.toggle('progress')
-	}); }
+	const card = document.getElementById('card');
+                card.addEventListener('click', _ => { if (flag == 0) {
+						const halfCallback = function() {
+							card.removeEventListener("webkitAnimationEnd", this,false);
+							card.removeEventListener("animationend", this,false);
+							card.removeEventListener("oanimationend", this,false);
+							card.classList.remove('flipping-1');
+							card.classList.remove('card__face--front');
+							card.classList.add('card__face--back');
+							card.classList.add('flipping-2');
+						}
+						card.addEventListener("webkitAnimationEnd", halfCallback,false);
+						card.addEventListener("animationend", halfCallback,false);
+						card.addEventListener("oanimationend", halfCallback,false);
+						card.classList.add('flipping-1');
+						flag = 1;
+						}
+					else {
+						const newhalfCallback = function() {
+							card.removeEventListener("webkitAnimationEnd", this,false);
+							card.removeEventListener("animationend", this,false);
+							card.removeEventListener("oanimationend", this,false);
+							card.classList.remove('flipping-3');
+							card.classList.remove('card__face--back');
+							card.classList.add('card__face--front');
+							card.classList.add('flipping-4');
+						}
+						card.addEventListener("webkitAnimationEnd", newhalfCallback,false);
+						card.addEventListener("animationend", newhalfCallback,false);
+						card.addEventListener("oanimationend", newhalfCallback,false);
+						card.classList.add('flipping-3');
+						flag = 0;
+					}
+					});
+					
+	}
+
 	</script>
 <body>
 <div class="scene scene--card" >
-  <div  "crd" class="card">
-  <div onclick = "func2()">
-    <div  class="card__face card__face--front" onclick = "finc1()">front</div>
-    <div class="card__face card__face--back" >back</div>
+	<div class="card">
+		<div id = "card" class = "card card__face--front" onclick = "func1()"></div>
 	</div>
-  </div>
 </div>
 </body>
 </html>
