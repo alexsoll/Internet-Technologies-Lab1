@@ -130,7 +130,7 @@
 	</style>
 	
 	<script language="javascript">
-	var i = 0;
+	var i = -1;
 	var cards = ['card__face--back1', 'card__face--back2',
 	'card__face--back3','card__face--back4','card__face--back5','card__face--back6','card__face--back7','card__face--back8','card__face--back9'];
 		
@@ -146,7 +146,8 @@
 	
 	cards.sort(compareRandom);
 	function func1(id) {
-	var strid = "card" + id;	
+	var strid = "card" + id;
+	var rev = "card" + String(8 - id);
 	const card = document.getElementById(strid);
                 card.addEventListener('click', _ => {
 						const halfCallback = function() {
@@ -154,14 +155,19 @@
 							card.removeEventListener("animationend", this,false);
 							card.removeEventListener("oanimationend", this,false);
 							card.classList.remove('flipping-1');
+							change_bachground(strid);
+							//i += 1;
 							card.classList.remove('card__face--front');
-							card.classList.add('flipping-2');							
+							card.classList.add('flipping-2');
+							if (id > 0) {
+								card.classList.remove(strid);
+							}
+							card.classList.add(rev);
 						}
 						card.addEventListener("webkitAnimationEnd", halfCallback,false);
 						card.addEventListener("animationend", halfCallback,false);
 						card.addEventListener("oanimationend", halfCallback,false);
 						card.classList.add('flipping-1');
-						change_bachground(strid);
 						i += 1;
 					});				
 	}	
